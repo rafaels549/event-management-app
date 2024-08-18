@@ -24,4 +24,3 @@ export class UnauthorizedError extends ApiError {
     super(message, 401);
   }
 }
-
