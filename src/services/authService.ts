@@ -13,9 +13,11 @@ class AuthService {
   async login(payload: UserLoginDTO) {
     const user = await userService.getByEmail(payload.email);
     const isValidPassword = await bcrypt.compare(
-      user.password,
       payload.password,
+      user.password,
     );
+    console.log(user);
+    console.log(isValidPassword);
     if (isValidPassword) {
       const token = jwt.sign(user.email, this.secretKey);
       return {
@@ -32,11 +34,13 @@ class AuthService {
       await userService.getByEmail(payload.email);
       return null;
     } catch (error) {
-      const hashedPassword = await bcrypt.hash(payload.password, 10);
+      const salts = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(payload.password, salts);
       const userDto: UserDTO = {
         ...payload,
         password: hashedPassword,
       };
+      console.log(userDto);
       const user = await userRepository.save(userDto);
       return user;
     }

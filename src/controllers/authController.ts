@@ -4,7 +4,7 @@ import authService from "../services/authService";
 import { ZodError } from "zod";
 
 export class AuthController {
-  async register(req: Request, res: Response, next: NextFunction) {
+  async register(req: Request, res: Response) {
     const body = req.body;
     try {
       const payload = userInsertSchema.parse(body);
@@ -25,13 +25,13 @@ export class AuthController {
       const response = await authService.login(payload);
       return res.status(200).json(response);
     } catch (error) {
+      console.log(error);
       if (error instanceof ZodError) {
         return res.status(400).json({
           message: "Validation Error",
           errors: error.errors,
         });
       }
-
       return res.status(500).json(error);
     }
   }
