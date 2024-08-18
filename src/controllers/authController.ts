@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { userInsertSchema, userLoginSchema } from "../dtos/userDtos";
 import authService from "../services/authService";
 import { ZodError } from "zod";
