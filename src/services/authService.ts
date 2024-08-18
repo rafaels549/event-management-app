@@ -16,10 +16,8 @@ class AuthService {
       payload.password,
       user.password,
     );
-    console.log(user);
-    console.log(isValidPassword);
     if (isValidPassword) {
-      const token = jwt.sign(user.email, this.secretKey);
+      const token = jwt.sign({ email: user.email }, this.secretKey);
       return {
         user,
         token,
