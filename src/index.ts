@@ -1,13 +1,7 @@
-import express from 'express'
-import { AppDataSource } from './data-source'
+import { AppDataSource } from "./data-source";
+import app from "./app";
+import "dotenv/config";
 
-AppDataSource.initialize().then(()=>{
-    const app  = express()
-    app.use(express.json())
-
-    app.get('/',(req,res) => {
-        return res.json()
-    })
-
-    return app.listen(process.env.PORT)
-})
+AppDataSource.initialize().then(() => {
+  return app.listen(process.env.PORT);
+});
